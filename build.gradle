@@ -1,0 +1,15 @@
+apply plugin:'java'
+apply plugin:'application'
+ 
+mainClassName = 'com.satvaimal.hellopersistence.Main'
+ 
+repositories {
+  mavenCentral()
+}// End of closure
+ 
+dependencies {
+ 
+  compile 'org.hibernate:hibernate-entitymanager:4.3.8.Final'
+  compile 'mysql:mysql-connector-java:5.1.34'
+ 
+}// End of closure
