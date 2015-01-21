@@ -5,6 +5,7 @@ import com.satvaimal.hellopersistence.dao.impl.AuthorDaoImpl;
 import com.satvaimal.hellopersistence.domain.Author;
  
 import java.util.Date;
+import java.util.List;
  
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -37,6 +38,12 @@ public class Main {
       author.setName( "J. R. Tolkien" );
       author.setBirthdate( new Date() );
       authorDao.save( author );
+
+      List<Author> authors = authorDao.list();
+ 
+      for ( Author a: authors ) {
+        System.out.printf( "ID: %d, name: %s%n", a.getId(), a.getName() );
+      }// End of method
  
     } catch ( Exception e ) {
       e.printStackTrace();

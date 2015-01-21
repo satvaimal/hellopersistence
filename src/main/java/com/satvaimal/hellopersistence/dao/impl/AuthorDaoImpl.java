@@ -2,9 +2,12 @@ package com.satvaimal.hellopersistence.dao.impl;
  
 import com.satvaimal.hellopersistence.dao.AuthorDao;
 import com.satvaimal.hellopersistence.domain.Author;
+
+import java.util.List;
  
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
  
 public class AuthorDaoImpl implements AuthorDao {
  
@@ -28,6 +31,15 @@ public class AuthorDaoImpl implements AuthorDao {
           e.getMessage() );
  
     }// End of catch
+ 
+  }// End of method
+
+  @SuppressWarnings("unchecked")
+  public List<Author> list() {
+ 
+    EntityManager em = emf.createEntityManager();
+    Query query = em.createQuery( "select a from Author a" );
+    return (List<Author>)( query.getResultList() );
  
   }// End of method
  
