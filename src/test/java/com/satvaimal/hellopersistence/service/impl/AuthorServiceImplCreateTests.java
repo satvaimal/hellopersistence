@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
  
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,8 +43,9 @@ public class AuthorServiceImplCreateTests {
   @Test
   public void entityWithErrors() throws Exception {
  
-    thrown.expect( IllegalArgumentException.class );
-    thrown.expectMessage( "authorDaoImpl.save.error: " );
+    thrown.expect( DataIntegrityViolationException.class );
+    thrown.expectMessage(
+        "not-null property references a null or transient value" );
     authorService.create( createAuthor( null ) );
  
   }// End of method
