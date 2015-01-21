@@ -1,11 +1,9 @@
-package com.satvaimal.hellopersistence.dao.impl;
+package com.satvaimal.hellopersistence.service.impl;
  
+import static com.satvaimal.hellopersistence.AuthorTestUtils.*;
 import com.satvaimal.hellopersistence.CommonTestConfig;
-import com.satvaimal.hellopersistence.AppConfig;
-import com.satvaimal.hellopersistence.dao.AuthorDao;
 import com.satvaimal.hellopersistence.domain.Author;
- 
-import java.util.Date;
+import com.satvaimal.hellopersistence.service.AuthorService;
  
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,24 +19,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  
 @RunWith(SpringJUnit4ClassRunner.class)
 @CommonTestConfig
-public class AuthorDaoImplSaveTests {
+public class AuthorServiceImplCreateTests {
  
   @Rule
   public ExpectedException thrown = ExpectedException.none();
  
+  @Autowired
+  private AuthorService authorService;
+ 
   @PersistenceContext
   private EntityManager em;
  
-  @Autowired
-  private AuthorDao authorDao;
- 
   @Test
-  public void entityPersistedSuccessfully() throws Exception {
+  public void entityCreatedSuccessfully() throws Exception {
  
-    Author author = new Author();
-    author.setName( "J. R. Tolkien" );
-    author.setBirthdate( new Date() );
-    authorDao.save( author );
+    authorService.create( createAuthor( "J. R. Tolkien" ) );
     assertEquals( 1, em.createQuery(
         "select a from Author a" ).getResultList().size() );
  
@@ -47,15 +42,9 @@ public class AuthorDaoImplSaveTests {
   @Test
   public void entityWithErrors() throws Exception {
  
-    Author author = new Author();
-    author.setName( null );
-    author.setBirthdate( new Date() );
- 
     thrown.expect( IllegalArgumentException.class );
     thrown.expectMessage( "authorDaoImpl.save.error: " );
-    thrown.expectMessage(
-        "not-null property references a null or transient value" );
-    authorDao.save( author );
+    authorService.create( createAuthor( null ) );
  
   }// End of method
  
@@ -63,9 +52,8 @@ public class AuthorDaoImplSaveTests {
   public void entityIsNull() throws Exception {
  
     thrown.expect( IllegalArgumentException.class );
-    thrown.expectMessage( "authorDaoImpl.save.error: " );
-    thrown.expectMessage( "attempt to create create event with null entity" );
-    authorDao.save( null );
+    thrown.expectMessage( "authorService.create.author.null" );
+    authorService.create( null );
  
   }// End of method
  

@@ -2,6 +2,8 @@ package com.satvaimal.hellopersistence;
  
 import com.satvaimal.hellopersistence.dao.AuthorDao;
 import com.satvaimal.hellopersistence.dao.impl.AuthorDaoImpl;
+import com.satvaimal.hellopersistence.service.AuthorService;
+import com.satvaimal.hellopersistence.service.impl.AuthorServiceImpl;
  
 import java.util.Properties;
  
@@ -70,5 +72,10 @@ public class AppConfig {
   AuthorDao authorDao() {
     return new AuthorDaoImpl();
   }// End of method 
+
+  @Bean
+  public AuthorService authorService() {
+    return new AuthorServiceImpl();
+  }// End of method
 
 }// End of class

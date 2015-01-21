@@ -1,11 +1,10 @@
-package com.satvaimal.hellopersistence.dao.impl;
+package com.satvaimal.hellopersistence.service.impl;
  
+import static com.satvaimal.hellopersistence.AuthorTestUtils.*;
 import com.satvaimal.hellopersistence.CommonTestConfig;
-import com.satvaimal.hellopersistence.AppConfig;
-import com.satvaimal.hellopersistence.dao.AuthorDao;
 import com.satvaimal.hellopersistence.domain.Author;
+import com.satvaimal.hellopersistence.service.AuthorService;
  
-import java.util.Date;
 import java.util.List;
  
 import static org.junit.Assert.*;
@@ -17,27 +16,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  
 @RunWith(SpringJUnit4ClassRunner.class)
 @CommonTestConfig
-public class AuthorDaoImplListTests {
+public class AuthorServiceImplListTests {
  
   @Autowired
-  private AuthorDao authorDao;
+  private AuthorService authorService;
  
   @Test
   public void listEntitiesSuccessfully() throws Exception {
  
-    persistAuthor( "J. R. Tolkien" );
-    persistAuthor( "Mario Puzo" );
-    List<Author> authors = authorDao.list();
+    authorService.create( createAuthor( "J. R. Tolkien" ) );
+    authorService.create( createAuthor( "Mario Puzo" ) );
+    List<Author> authors = authorService.list();
     assertEquals( 2, authors.size() );
- 
-  }// End of method
- 
-  private void persistAuthor( String name ) throws Exception {
- 
-    Author author = new Author();
-    author.setName( name );
-    author.setBirthdate( new Date() );
-    authorDao.save( author );
  
   }// End of method
  
