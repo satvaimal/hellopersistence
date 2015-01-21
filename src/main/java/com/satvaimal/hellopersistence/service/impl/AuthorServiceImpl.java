@@ -17,10 +17,7 @@ public class AuthorServiceImpl implements AuthorService {
   @Transactional
   public Author create( Author author ) throws Exception {
  
-    if ( author == null ) {
-      throw new IllegalArgumentException( "authorService.create.author.null" );
-    }// End of if
- 
+    validateNull( author, "create" );
     return authorRepository.save( author );
  
   }// End of method
@@ -28,6 +25,42 @@ public class AuthorServiceImpl implements AuthorService {
   @Transactional
   public List<Author> list() {
     return authorRepository.findAll();
+  }// End of method
+ 
+  @Transactional
+  public Author get( long id ) {
+    return authorRepository.findOne( id );
+  }// End of method
+ 
+  @Transactional
+  public Author update( Author author ) throws Exception {
+ 
+    validateNull( author, "update" );
+ 
+    if ( !authorRepository.exists( author.getId() ) ) {
+      throw new IllegalArgumentException(
+          "authorService.update.author.not.found" );
+    }// End of if
+ 
+    return author;
+ 
+  }// End of method
+ 
+  @Transactional
+  public void delete( Author author ) throws Exception {
+ 
+    validateNull( author, "delete" );
+    authorRepository.delete( author );
+ 
+  }// End of method
+ 
+  private void validateNull( Author author, String method ) throws Exception {
+ 
+    if ( author == null ) {
+      throw new IllegalArgumentException( "authorService." + method +
+          ".author.null" );
+    }// End of if
+ 
   }// End of method
  
 }// End of class
