@@ -67,12 +67,8 @@ public class AppConfig {
   }// End of method
  
   @Bean
-  AuthorDao authorDao( EntityManagerFactory entityManagerFactory ) {
- 
-    AuthorDaoImpl authorDao = new AuthorDaoImpl();
-    authorDao.setEntityManagerFactory( entityManagerFactory );
-    return authorDao;
- 
-  }// End of method
- 
+  AuthorDao authorDao() {
+    return new AuthorDaoImpl();
+  }// End of method 
+
 }// End of class

@@ -6,7 +6,8 @@ import com.satvaimal.hellopersistence.domain.Author;
  
 import java.util.Date;
  
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
  
 import static org.junit.Assert.*;
 import org.junit.Rule;
@@ -28,8 +29,8 @@ public class AuthorDaoImplSaveTests {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
  
-  @Autowired
-  private EntityManagerFactory emf;
+  @PersistenceContext
+  private EntityManager em;
  
   @Autowired
   private AuthorDao authorDao;
@@ -41,7 +42,7 @@ public class AuthorDaoImplSaveTests {
     author.setName( "J. R. Tolkien" );
     author.setBirthdate( new Date() );
     authorDao.save( author );
-    assertEquals( 1, emf.createEntityManager().createQuery(
+    assertEquals( 1, em.createQuery(
         "select a from Author a" ).getResultList().size() );
  
   }// End of method
