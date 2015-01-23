@@ -2,6 +2,7 @@ package com.satvaimal.hellopersistence.domain;
  
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class Book {
   @Column(nullable = false, length = 100)
   private String title;
  
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
   private Author author;
  
   public void setId( long id ) {
